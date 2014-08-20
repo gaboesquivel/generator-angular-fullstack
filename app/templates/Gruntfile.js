@@ -437,14 +437,14 @@ module.exports = function (grunt) {
         'coffee',<% } %><% if(filters.jade) { %>
         'jade',<% } %><% if(filters.stylus) { %>
         'stylus',<% } %><% if(filters.sass) { %>
-        'sass',<% } %><% if(filters.less) { %>
+        'sass:dev',<% } %><% if(filters.less) { %>
         'less',<% } %>
       ],
       test: [<% if(filters.coffee) { %>
         'coffee',<% } %><% if(filters.jade) { %>
         'jade',<% } %><% if(filters.stylus) { %>
         'stylus',<% } %><% if(filters.sass) { %>
-        'sass',<% } %><% if(filters.less) { %>
+        'sass:dist',<% } %><% if(filters.less) { %>
         'less',<% } %>
       ],
       debug: {
@@ -460,7 +460,7 @@ module.exports = function (grunt) {
         'coffee',<% } %><% if(filters.jade) { %>
         'jade',<% } %><% if(filters.stylus) { %>
         'stylus',<% } %><% if(filters.sass) { %>
-        'sass',<% } %><% if(filters.less) { %>
+        'sass:dist',<% } %><% if(filters.less) { %>
         'less',<% } %>
         'imagemin',
         'svgmin'
@@ -564,7 +564,21 @@ module.exports = function (grunt) {
 
     // Compiles Sass to CSS
     sass: {
-      server: {
+      dev: {
+        options: {
+          sourcemaps: true,
+          loadPath: [
+            '<%%= yeoman.client %>/bower_components',
+            '<%%= yeoman.client %>/app',
+            '<%%= yeoman.client %>/components'
+          ],
+          compass: false
+        },
+        files: {
+          '.tmp/app/app.css' : '<%%= yeoman.client %>/app/app.scss'
+        }
+      },
+      dist: {
         options: {
           loadPath: [
             '<%%= yeoman.client %>/bower_components',
